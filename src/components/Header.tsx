@@ -1,13 +1,14 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Utensils, Wifi, WifiOff } from 'lucide-react';
+import { Utensils, Wifi, WifiOff, QrCode } from 'lucide-react';
 
 interface HeaderProps {
   isOnline: boolean;
   lastUpdated?: string;
+  onToggleQR?: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ isOnline, lastUpdated }) => {
+const Header: React.FC<HeaderProps> = ({ isOnline, lastUpdated, onToggleQR }) => {
   return (
     <motion.header
       initial={{ opacity: 0, y: -50 }}
@@ -42,6 +43,19 @@ const Header: React.FC<HeaderProps> = ({ isOnline, lastUpdated }) => {
                 {isOnline ? 'En ligne' : 'Hors ligne'}
               </span>
             </div>
+
+            {onToggleQR && (
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={onToggleQR}
+                className="bg-primary/20 hover:bg-primary/30 text-primary px-3 py-2 rounded-lg transition-colors flex items-center space-x-2"
+                title="Afficher le code QR"
+              >
+                <QrCode className="w-5 h-5" />
+                <span className="text-sm hidden md:inline">QR</span>
+              </motion.button>
+            )}
             
             {lastUpdated && (
               <div className="text-xs text-gray-400 hidden md:block">

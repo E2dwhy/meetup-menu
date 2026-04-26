@@ -6,11 +6,23 @@ import Header from './components/Header.tsx';
 import CategoriesOverview from './components/CategoriesOverview.tsx';
 import CategoryPage from './components/CategoryPage.tsx';
 import ScrollToTop from './components/ScrollToTop.tsx';
+import QRCodePage from './components/QRCodePage.tsx';
 import { useMenuData } from './hooks/useMenuData.ts';
 
 const App: React.FC = () => {
   const { menuData, loading, error, isOnline } = useMenuData();
   const [selectedCategory, setSelectedCategory] = useState<MenuCategoryType | null>(null);
+  const [currentPage, setCurrentPage] = useState<'menu' | 'qr'>('menu');
+
+  // Handle URL-based routing
+  useEffect(() => {
+    const view = new URLSearchParams(window.location.search).get('view');
+    if (view === 'qr') {
+      setCurrentPage('qr');
+    } else {
+      setCurrentPage('menu');
+    }
+  }, []);
 
   const handleCategorySelect = (category: MenuCategoryType) => {
     setSelectedCategory(category);
@@ -18,6 +30,14 @@ const App: React.FC = () => {
 
   const handleBackToCategories = () => {
     setSelectedCategory(null);
+  };
+
+  const handleToggleQR = () => {
+    if (currentPage === 'qr') {
+      window.location.href = '/?view=menu';
+    } else {
+      window.location.href = '/?view=qr';
+    }
   };
 
   if (loading) {
@@ -34,6 +54,12 @@ const App: React.FC = () => {
     );
   }
 
+  // Show QR code page
+  if (currentPage === 'qr') {
+    return <QRCodePage />;
+  }
+
+  // Show menu page
   if (error || !menuData) {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center p-4">
@@ -61,7 +87,7 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-black">
-      <Header isOnline={isOnline} lastUpdated={menuData.lastUpdated} />
+      <Header isOnline={isOnline} lastUpdated={menuData.lastUpdated} onToggleQR={handleToggleQR} />
       
       <AnimatePresence mode="wait">
         {selectedCategory ? (
