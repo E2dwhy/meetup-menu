@@ -1,0 +1,31 @@
+{
+  "short_name": "Meet'up",
+  "name": "Meet'up Menu",
+  "description": "Menu du meet'up lounge avec support hors ligne",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "logo-meet-up.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "logo-meet-up.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#dc2626",
+  "background_color": "#ffffff",
+  "orientation": "portrait",
+  "categories": ["food", "restaurant", "lifestyle"],
+  "lang": "fr",
+  "scope": "/",
+  "prefer_related_applications": false
+}
